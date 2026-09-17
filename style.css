@@ -120,24 +120,31 @@ html, body {
 
 
 #mission-nav {
-  padding: 12px 14px;
+  padding: 8px 10px;
   border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  max-height: 232px;
 }
+
+#mission-nav::-webkit-scrollbar { width: 3px; }
+#mission-nav::-webkit-scrollbar-track { background: transparent; }
+#mission-nav::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 2px; }
 
 .mission-btn {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: 7px;
+  gap: 9px;
+  padding: 6px 8px;
+  border-radius: 6px;
   border: none;
   background: transparent;
   color: var(--text-muted);
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 12px;
   cursor: pointer;
   text-align: left;
   transition: background 0.15s, color 0.15s;
@@ -157,8 +164,8 @@ html, body {
 .mission-btn.completed { color: var(--success); }
 
 .mission-dot {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   border: 1.5px solid var(--border-light);
   display: flex;
