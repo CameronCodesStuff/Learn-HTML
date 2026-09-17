@@ -6,59 +6,59 @@
 <title>Build Your Page — HTML Workshop</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<div id="topbar">
+  <div id="topbar-left">
+    <span id="logo">&lt;html&gt;</span>
+    <span id="mission-label">Mission 1 of 7</span>
+  </div>
+  <div id="progress-wrap">
+    <div id="progress-bar-outer">
+      <div id="progress-bar-inner" style="width:0%"></div>
+    </div>
+    <span id="progress-text">0/7</span>
+  </div>
+</div>
+
 <div id="app">
 
-  <div id="topbar">
-    <div id="topbar-left">
-      <span id="logo">&lt;html&gt;</span>
-      <span id="mission-label">Mission 1 of 7</span>
-    </div>
-    <div id="progress-wrap">
-      <div id="progress-bar-outer">
-        <div id="progress-bar-inner" style="width:0%"></div>
+  <div id="sidebar">
+    <div id="mission-nav"></div>
+    <div id="instruction-panel"></div>
+    <div id="sidebar-actions">
+      <button class="btn btn-primary" id="btn-check">Check my code ✓</button>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <button class="btn btn-ghost" id="btn-hint">Hint</button>
+        <button class="btn btn-ghost" id="btn-explain">Explain</button>
+        <button class="btn btn-ghost" id="btn-ref">Reference</button>
       </div>
-      <span id="progress-text">0/7</span>
     </div>
   </div>
 
-  <div id="main">
+  <div id="editor-area">
 
-    <div id="sidebar">
-      <div id="mission-nav"></div>
-      <div id="instruction-panel"></div>
-      <div id="sidebar-actions">
-        <button class="btn btn-primary" id="btn-check">Check my code ✓</button>
-        <button class="btn btn-ghost" id="btn-hint">Hint</button>
-        <button class="btn btn-ghost" id="btn-explain">Explain my code</button>
-        <button class="btn btn-ghost" id="btn-ref">HTML Reference</button>
+    <div id="editor-pane">
+      <div id="editor-header">
+        <span class="pane-label">index.html</span>
+        <div id="editor-actions"></div>
       </div>
+      <div id="editor-wrap">
+        <div id="line-numbers"></div>
+        <textarea id="code-editor" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off" placeholder="Start typing your HTML here..."></textarea>
+      </div>
+      <div id="feedback-bar"></div>
     </div>
 
-    <div id="editor-area">
-
-      <div id="editor-pane">
-        <div id="editor-header">
-          <span class="pane-label">index.html</span>
-          <div id="editor-actions"></div>
-        </div>
-        <div id="editor-wrap">
-          <div id="line-numbers"></div>
-          <textarea id="code-editor" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off" placeholder="Start typing your HTML here..."></textarea>
-        </div>
-        <div id="feedback-bar"></div>
+    <div id="preview-pane">
+      <div id="preview-header">
+        <span class="pane-label">Preview</span>
+        <span style="font-size:11px;color:var(--text-muted)">Live — updates as you type</span>
       </div>
-
-      <div id="preview-pane">
-        <div id="preview-header">
-          <span class="pane-label">Preview</span>
-          <span style="font-size:11px;color:var(--text-muted)">Updates as you type</span>
-        </div>
-        <iframe id="preview-frame" sandbox="allow-same-origin" title="Live preview"></iframe>
-      </div>
-
+      <iframe id="preview-frame" sandbox="allow-same-origin" title="Live preview"></iframe>
     </div>
 
   </div>
@@ -83,14 +83,15 @@
 
 <div id="complete-overlay">
   <div id="complete-card">
-    <div id="complete-icon">&#10003;</div>
+    <div id="complete-icon">✓</div>
     <div id="complete-title"></div>
     <div id="complete-msg"></div>
     <button class="btn btn-primary" id="complete-next" style="margin-top:8px;width:100%"></button>
-    <button class="btn btn-ghost" onclick="document.getElementById('complete-overlay').classList.remove('show')" style="width:100%;font-size:11px;padding:6px;">Keep editing first</button>
+    <button class="btn btn-ghost" onclick="document.getElementById('complete-overlay').classList.remove('show')" style="width:100%;font-size:12px;padding:8px;">Keep editing first</button>
   </div>
 </div>
 
-<script src="script.js"></script>
+
+  <script src="script.js"></script>
 </body>
 </html>
