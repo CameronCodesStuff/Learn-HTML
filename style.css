@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -32,9 +30,10 @@ html, body {
 }
 
 #app {
-  display: grid;
-  grid-template-rows: 48px 1fr;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  min-height: 0;
 }
 
 #topbar {
@@ -46,6 +45,7 @@ html, body {
   border-bottom: 1px solid var(--border);
   gap: 16px;
   flex-shrink: 0;
+  height: 48px;
 }
 
 #topbar-left {
@@ -99,6 +99,8 @@ html, body {
   display: grid;
   grid-template-columns: 300px 1fr;
   overflow: hidden;
+  flex: 1;
+  min-height: 0;
 }
 
 #sidebar {
@@ -107,6 +109,7 @@ html, body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-height: 0;
 }
 
 #mission-nav {
@@ -331,6 +334,7 @@ html, body {
   display: grid;
   grid-template-rows: 1fr 1fr;
   overflow: hidden;
+  min-height: 0;
 }
 
 #editor-pane {
@@ -338,6 +342,7 @@ html, body {
   flex-direction: column;
   border-bottom: 1px solid var(--border);
   overflow: hidden;
+  min-height: 0;
 }
 
 #editor-header {
@@ -369,6 +374,7 @@ html, body {
   display: flex;
   overflow: hidden;
   background: var(--bg);
+  min-height: 0;
 }
 
 #line-numbers {
@@ -416,6 +422,7 @@ html, body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-height: 0;
 }
 
 #preview-header {
@@ -433,18 +440,24 @@ html, body {
   flex: 1;
   border: none;
   background: #fff;
+  min-height: 0;
+  width: 100%;
 }
 
 #feedback-bar {
-  display: none;
+  display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 18px;
+  padding: 0 18px;
   font-size: 12px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid transparent;
+  height: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: height 0.2s ease, padding 0.2s ease;
 }
 
-#feedback-bar.show { display: flex; }
+#feedback-bar.show { height: 36px; padding: 0 18px; border-top-color: var(--border); }
 #feedback-bar.hint { color: var(--warn); background: rgba(245, 166, 35, 0.08); border-top-color: rgba(245, 166, 35, 0.2); }
 #feedback-bar.success { color: var(--success); background: var(--success-dim); border-top-color: rgba(62, 207, 164, 0.2); }
 
@@ -678,14 +691,15 @@ html, body {
   html, body { overflow: auto; }
 
   #app {
-    grid-template-rows: 48px auto;
+    flex-direction: column;
     height: auto;
-    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   #main {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    display: flex;
+    flex-direction: column;
+    flex: none;
     overflow: visible;
   }
 
@@ -693,11 +707,11 @@ html, body {
     border-right: none;
     border-bottom: 1px solid var(--border);
     overflow: visible;
-    max-height: none;
+    min-height: 0;
+    flex-shrink: 0;
   }
 
   #instruction-panel {
-    overflow: visible;
     max-height: 300px;
     overflow-y: auto;
   }
@@ -711,8 +725,20 @@ html, body {
   .mission-title-text { display: none; }
 
   #editor-area {
-    grid-template-rows: 50vh 40vh;
+    display: flex;
+    flex-direction: column;
     overflow: visible;
+    flex: none;
+  }
+
+  #editor-pane {
+    height: 50dvh;
+    flex-shrink: 0;
+  }
+
+  #preview-pane {
+    height: 40dvh;
+    flex-shrink: 0;
   }
 
   #explain-panel, #ref-panel {
