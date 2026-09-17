@@ -7,3 +7,6 @@ Learn-HTML/
   ├── script.js
   ├── style.css
 ```
+---
+## How do I learn?
+Learn-HTML aims to teach the absolute basics of HTML, for beginners who have never typed a line of code in their life. Learn-HTML gives you a dead simple guide to follow, then lets you experiment on your own.
