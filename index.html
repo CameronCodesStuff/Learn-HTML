@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Your Page — HTML Workshop</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <div id="topbar">
+    <div id="topbar-left">
+      <span id="logo">&lt;html&gt;</span>
+      <span id="mission-label">Mission 1 of 7</span>
+    </div>
+    <div id="progress-wrap">
+      <div id="progress-bar-outer">
+        <div id="progress-bar-inner" style="width:0%"></div>
+      </div>
+      <span id="progress-text">0/7</span>
+    </div>
+  </div>
+
+  <div id="main">
+
+    <div id="sidebar">
+      <div id="mission-nav"></div>
+      <div id="instruction-panel"></div>
+      <div id="sidebar-actions">
+        <button class="btn btn-primary" id="btn-check">Check my code ✓</button>
+        <button class="btn btn-ghost" id="btn-hint">Hint</button>
+        <button class="btn btn-ghost" id="btn-explain">Explain my code</button>
+        <button class="btn btn-ghost" id="btn-ref">HTML Reference</button>
+      </div>
+    </div>
+
+    <div id="editor-area">
+
+      <div id="editor-pane">
+        <div id="editor-header">
+          <span class="pane-label">index.html</span>
+          <div id="editor-actions"></div>
+        </div>
+        <div id="editor-wrap">
+          <div id="line-numbers"></div>
+          <textarea id="code-editor" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off" placeholder="Start typing your HTML here..."></textarea>
+        </div>
+        <div id="feedback-bar"></div>
+      </div>
+
+      <div id="preview-pane">
+        <div id="preview-header">
+          <span class="pane-label">Preview</span>
+          <span style="font-size:11px;color:var(--text-muted)">Updates as you type</span>
+        </div>
+        <iframe id="preview-frame" sandbox="allow-same-origin" title="Live preview"></iframe>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div id="explain-panel">
+  <div id="explain-header">
+    <h3>Explaining your code</h3>
+    <button id="explain-close">×</button>
+  </div>
+  <div id="explain-content"></div>
+</div>
+
+<div id="ref-panel">
+  <div id="ref-header">
+    <h3>HTML Reference</h3>
+    <button id="ref-close">×</button>
+  </div>
+  <div id="ref-content"></div>
+</div>
+
+<div id="complete-overlay">
+  <div id="complete-card">
+    <div id="complete-icon">✓</div>
+    <div id="complete-title"></div>
+    <div id="complete-msg"></div>
+    <button class="btn btn-primary" id="complete-next" style="margin-top:8px;width:100%"></button>
+    <button class="btn btn-ghost" onclick="document.getElementById('complete-overlay').classList.remove('show')" style="width:100%;font-size:11px;padding:6px;">Keep editing first</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
