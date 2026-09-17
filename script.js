@@ -242,6 +242,107 @@ const ELEMENT_EXPLANATIONS = {
   '/ol': "Closes the numbered list.",
 };
 
+function escapeForHighlight(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function highlightHTML(code) {
+  let result = '';
+  let i = 0;
+  const len = code.length;
+
+  while (i < len) {
+    if (code[i] === '<') {
+      if (code.slice(i, i + 4) === '<!--') {
+        const end = code.indexOf('-->', i + 4);
+        const commentEnd = end === -1 ? len : end + 3;
+        result += `<span class="hl-comment">${escapeForHighlight(code.slice(i, commentEnd))}</span>`;
+        i = commentEnd;
+      } else if (code.slice(i, i + 9).toLowerCase() === '<!doctype') {
+        const end = code.indexOf('>', i);
+        const tagEnd = end === -1 ? len : end + 1;
+        result += `<span class="hl-doctype">${escapeForHighlight(code.slice(i, tagEnd))}</span>`;
+        i = tagEnd;
+      } else {
+        const end = code.indexOf('>', i);
+        const tagEnd = end === -1 ? len : end + 1;
+        const rawTag = code.slice(i, tagEnd);
+
+        let tagHtml = '<span class="hl-tag-bracket">&lt;</span>';
+        const inner = rawTag.slice(1, rawTag.endsWith('>') ? rawTag.length - 1 : rawTag.length);
+        const isClose = inner.startsWith('/');
+        const innerContent = isClose ? inner.slice(1) : inner;
+
+        const nameMatch = innerContent.match(/^([a-zA-Z][a-zA-Z0-9]*)/);
+        if (nameMatch) {
+          if (isClose) tagHtml += '<span class="hl-tag-bracket">/</span>';
+          tagHtml += `<span class="hl-tag-name">${nameMatch[1]}</span>`;
+          let rest = innerContent.slice(nameMatch[1].length);
+
+          const attrRegex = /(\s+)([a-zA-Z][a-zA-Z0-9\-]*)(\s*=\s*)(["'][^"']*["']|[^\s>]+)?/g;
+          let lastIdx = 0;
+          let attrMatch;
+          let restResult = '';
+
+          while ((attrMatch = attrRegex.exec(rest)) !== null) {
+            restResult += escapeForHighlight(rest.slice(lastIdx, attrMatch.index));
+            restResult += attrMatch[1];
+            restResult += `<span class="hl-attr-name">${escapeForHighlight(attrMatch[2])}</span>`;
+            if (attrMatch[3]) {
+              restResult += `<span class="hl-attr-equals">${escapeForHighlight(attrMatch[3])}</span>`;
+            }
+            if (attrMatch[4]) {
+              restResult += `<span class="hl-attr-value">${escapeForHighlight(attrMatch[4])}</span>`;
+            }
+            lastIdx = attrMatch.index + attrMatch[0].length;
+          }
+          restResult += escapeForHighlight(rest.slice(lastIdx));
+          tagHtml += restResult;
+        } else {
+          tagHtml += escapeForHighlight(inner);
+        }
+
+        if (rawTag.endsWith('>')) tagHtml += '<span class="hl-tag-bracket">&gt;</span>';
+        result += tagHtml;
+        i = tagEnd;
+      }
+    } else if (code[i] === '&') {
+      const semi = code.indexOf(';', i);
+      if (semi !== -1 && semi - i < 12) {
+        result += `<span class="hl-entity">${escapeForHighlight(code.slice(i, semi + 1))}</span>`;
+        i = semi + 1;
+      } else {
+        result += `<span class="hl-text">&amp;</span>`;
+        i++;
+      }
+    } else {
+      let j = i;
+      while (j < len && code[j] !== '<' && code[j] !== '&') j++;
+      const text = code.slice(i, j);
+      if (text.trim()) {
+        result += `<span class="hl-text">${escapeForHighlight(text)}</span>`;
+      } else {
+        result += escapeForHighlight(text);
+      }
+      i = j;
+    }
+  }
+
+  return result;
+}
+
+function updateHighlight() {
+  const hl = document.getElementById('highlight-layer');
+  if (!hl) return;
+  hl.innerHTML = highlightHTML(editor.value) + '\n';
+  hl.scrollTop = editor.scrollTop;
+  hl.scrollLeft = editor.scrollLeft;
+}
+
 let currentMission = 0;
 let hintCounts = new Array(MISSIONS.length).fill(0);
 let completed = new Array(MISSIONS.length).fill(false);
@@ -275,6 +376,11 @@ function updateLineNumbers() {
 
 function syncScroll() {
   lineNumbers.scrollTop = editor.scrollTop;
+  const hl = document.getElementById('highlight-layer');
+  if (hl) {
+    hl.scrollTop = editor.scrollTop;
+    hl.scrollLeft = editor.scrollLeft;
+  }
 }
 
 function updatePreview() {
@@ -481,6 +587,7 @@ function buildRef() {
 
 editor.addEventListener('input', () => {
   updateLineNumbers();
+  updateHighlight();
   updatePreview();
   if (completed[currentMission]) return;
   const m = MISSIONS[currentMission];
@@ -525,4 +632,5 @@ buildMissionNav();
 buildRef();
 setMission(0);
 updateLineNumbers();
+updateHighlight();
 updatePreview();
