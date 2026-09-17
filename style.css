@@ -126,13 +126,11 @@ html, body {
   flex-direction: column;
   gap: 1px;
   flex-shrink: 0;
-  overflow-y: auto;
-  max-height: 232px;
 }
 
-#mission-nav::-webkit-scrollbar { width: 3px; }
-#mission-nav::-webkit-scrollbar-track { background: transparent; }
-#mission-nav::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 2px; }
+.mission-btn:not(.active) {
+  display: none;
+}
 
 .mission-btn {
   display: flex;
